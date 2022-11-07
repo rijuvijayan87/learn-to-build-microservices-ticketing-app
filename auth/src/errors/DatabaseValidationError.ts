@@ -14,4 +14,9 @@ export class DatabaseError extends CustomError {
       },
     ];
   }
+
+  testFunction = (): string => {
+    console.log('testing feature');
+    return '';
+  };
 }
