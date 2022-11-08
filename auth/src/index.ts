@@ -38,4 +38,4 @@ app.listen(PORT, () => {
   console.log(`auth service is listening on port : ${PORT}`);
 });
 
-//startMongoDB();
+startMongoDB();
