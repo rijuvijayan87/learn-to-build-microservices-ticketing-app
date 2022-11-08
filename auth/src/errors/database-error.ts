@@ -1,4 +1,4 @@
-import { CustomError } from './CustomError';
+import { CustomError } from './custom-error';
 
 export class DatabaseError extends CustomError {
   statusCode = 500;
@@ -7,16 +7,11 @@ export class DatabaseError extends CustomError {
     super('Database connection failed');
     Object.setPrototypeOf(this, DatabaseError.prototype);
   }
-  serializeError() {
+  serializeErrors() {
     return [
       {
         message: this.reason,
       },
     ];
   }
-
-  testFunction = (): string => {
-    console.log('testing feature');
-    return '';
-  };
 }
