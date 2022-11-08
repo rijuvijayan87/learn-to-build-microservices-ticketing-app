@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { Password } from '../services/password';
 
 type UserAttributes = {
   email: string;
@@ -23,6 +24,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+});
+
+UserSchema.pre('save', async function (done) {
+  if (this.isModified('password')) {
+    const hashedPassword = await Password.toHash(this.get('password'));
+    this.set('password', hashedPassword);
+  }
+  done();
 });
 
 UserSchema.statics.build = (userAttr: UserAttributes) => {
