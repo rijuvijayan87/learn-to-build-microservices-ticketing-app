@@ -1,4 +1,4 @@
-import { CustomError } from './CustomError';
+import { CustomError } from './custom-error';
 
 export class RouteNotFoundError extends CustomError {
   statusCode = 404;
@@ -8,7 +8,7 @@ export class RouteNotFoundError extends CustomError {
     Object.setPrototypeOf(this, RouteNotFoundError.prototype);
   }
 
-  serializeError() {
+  serializeErrors() {
     return [
       {
         message: 'Invalid route attempted',

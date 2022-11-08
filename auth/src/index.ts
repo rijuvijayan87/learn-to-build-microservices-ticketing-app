@@ -6,7 +6,7 @@ import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 import { errorHandler } from './middleware/error-handler';
-import { RouteNotFoundError } from './errors/RouteNotFoundError';
+import { RouteNotFoundError } from './errors/route-not-found-error';
 import mongoose from 'mongoose';
 
 const app = express();
