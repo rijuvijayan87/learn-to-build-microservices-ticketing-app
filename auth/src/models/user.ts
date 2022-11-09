@@ -15,16 +15,28 @@ interface UserDocument extends mongoose.Document {
   password: string;
 }
 
-const UserSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    require: true,
+const UserSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      require: true,
+    },
+    password: {
+      type: String,
+      require: true,
+    },
   },
-  password: {
-    type: String,
-    require: true,
-  },
-});
+  {
+    toJSON: {
+      // formatting response removing the password and transforming id field replacing '_id' with 'id'
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.password, delete ret.__v;
+      },
+    },
+  }
+);
 
 UserSchema.pre('save', async function (done) {
   if (this.isModified('password')) {
