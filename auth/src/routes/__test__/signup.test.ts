@@ -79,16 +79,6 @@ describe('invalid signup parameters', () => {
       })
       .expect(400);
   });
-
-  it('returns a 400 with when password length is greater than 20', async () => {
-    return request(app)
-      .post('/api/users/signup')
-      .send({
-        email: 'test@test.com',
-        password: '111111111111111111111',
-      })
-      .expect(400);
-  });
 });
 
 it('dissallows duplicate emails', async () => {
