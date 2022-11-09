@@ -15,7 +15,7 @@ app.use(json());
 app.use(
   cookieSession({
     signed: false,
-    secure: true,
+    secure: process.env.NODE_ENV !== 'test', // jest would set NODE_ENV variable to 'test' when it runs the test
   })
 );
 

@@ -3,8 +3,10 @@ import mongoose from 'mongoose';
 import { app } from '../app';
 
 let mongo: any;
+
 beforeAll(async () => {
-  const mongo = await MongoMemoryServer.create();
+  process.env.JWT_KEY = 'asdfasdf';
+  mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
   await mongoose.connect(mongoUri, {});
