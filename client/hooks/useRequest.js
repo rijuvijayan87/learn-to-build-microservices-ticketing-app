@@ -13,6 +13,7 @@ export default ({ url, method, body, onSuccess }) => {
             }
             return response.body;
         } catch (err) {
+            console.log(err);
             setErrors(<div className="alert alert-danger">
                 <h4>Oops...</h4>
                 <ul className="my-0">
