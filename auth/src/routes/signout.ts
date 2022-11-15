@@ -1,9 +1,8 @@
 import express from 'express';
-import { currentUser } from '../middleware/current-user';
 
 const router = express.Router();
 
-router.post('/api/users/signout', currentUser, (req, res) => {
+router.post('/api/users/signout', (req, res) => {
   req.session = null;
   res.send({});
 });
