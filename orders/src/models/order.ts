@@ -5,14 +5,14 @@ import { TicketDocument } from './ticket';
 interface OrderAttributes {
   userId: string;
   status: OrderStatus;
-  expiresAt: string;
+  expiresAt: Date;
   ticket: TicketDocument;
 }
 
 interface OrderDocument extends mongoose.Document {
   userId: string;
   status: OrderStatus;
-  expiresAt: string;
+  expiresAt: Date;
   ticket: TicketDocument;
 }
 
