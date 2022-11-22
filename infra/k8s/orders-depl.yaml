@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: orders-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: orders
   template:
     metadata:
       labels:
-        app: auth
+        app: orders
     spec:
       containers:
-        - name: auth
-          image: gcr.io/ticketing-dev-367810/auth
+        - name: orders
+          image: gcr.io/ticketing-dev-367810/orders
           resources:
             requests:
               memory: '128Mi'
@@ -23,8 +23,16 @@ spec:
               memory: '256Mi'
               cpu: '250m'
           env:
+            - name: NATS_URL
+              value: 'http://nats-service:4222'
+            - name: NATS_CLUSTER_ID
+              value: ticketing
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: MONGO_URI
-              value: 'mongodb://auth-mongo-service:27017/auth'
+              value: 'mongodb://orders-mongo-service:27017/orders'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
@@ -34,12 +42,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: orders-service
 spec:
   selector:
-    app: auth
+    app: orders
   ports:
-    - name: auth
+    - name: orders
       protocol: TCP
       port: 3000
       targetPort: 3000
