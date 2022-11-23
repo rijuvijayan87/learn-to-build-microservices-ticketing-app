@@ -69,5 +69,5 @@ it('publishes a ticket cancelled event', async () => {
     (natsWrapper.client.publish as jest.Mock).mock.calls[0][1]
   );
 
-  expect(cancelledTicket.orderId).toBeUndefined();
+  expect(cancelledTicket.orderId).not.toBeDefined();
 });
