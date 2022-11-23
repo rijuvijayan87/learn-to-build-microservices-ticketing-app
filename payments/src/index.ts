@@ -39,7 +39,7 @@ const start = async () => {
     process.on('SIGTERM', () => natsWrapper.client.close());
 
     await mongoose.connect(process.env.MONGO_URI);
-    console.log('Connected to tickets mongodb..');
+    console.log('Connected to payments mongodb..');
   } catch (error) {
     console.error(error);
   }
