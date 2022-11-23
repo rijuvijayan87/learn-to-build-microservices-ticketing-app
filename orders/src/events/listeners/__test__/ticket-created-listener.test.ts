@@ -19,9 +19,7 @@ const setup = async () => {
   // create a fake message object
   // @ts-ignore
   const msg: Message = {
-    ack: jest.fn(() => {
-      console.log('msg ack called');
-    }),
+    ack: jest.fn(),
   };
 
   return { listener, data, msg };
