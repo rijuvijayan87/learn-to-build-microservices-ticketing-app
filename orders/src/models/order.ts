@@ -1,7 +1,7 @@
 import { OrderStatus } from '@ticketing-rv/common';
 import mongoose from 'mongoose';
 import { TicketDocument } from './ticket';
-
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 interface OrderAttributes {
   userId: string;
   status: OrderStatus;
@@ -50,6 +50,8 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 orderSchema.statics.build = (attrs: OrderAttributes) => {
   return new Order(attrs);
 };
