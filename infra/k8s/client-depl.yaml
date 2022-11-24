@@ -17,11 +17,11 @@ spec:
           image: gcr.io/ticketing-dev-367810/client
           resources:
             requests:
-              memory: '128Mi'
-              cpu: '100m'
+              memory: '512Mi'
+              cpu: '500m'
             limits:
-              memory: '256Mi'
-              cpu: '250m'
+              memory: '900Mi'
+              cpu: '900m'
 ---
 apiVersion: v1
 kind: Service

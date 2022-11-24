@@ -46,6 +46,7 @@ const start = async () => {
     new TicketUpdatedListener(natsWrapper.client).subscribe();
     new ExpirationCompleteListener(natsWrapper.client).subscribe();
     new PaymentCreatedListener(natsWrapper.client).subscribe();
+
     await mongoose.connect(process.env.MONGO_URI);
     console.log('Connected to orders mongodb..');
   } catch (error) {
