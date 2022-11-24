@@ -1,3 +1,4 @@
 node_modules/
 .kpt-pipeline
 .next
+/**/*.DS_Store
