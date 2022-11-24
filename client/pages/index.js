@@ -6,7 +6,7 @@ const LandingPage = ({ currentUser, tickets }) => {
                 <td>{ticket.title}</td>
                 <td>{ticket.price}</td>
                 <td>
-                    <Link legacyBehavior href="/ticket/[ticketId]" as={`/ticket/${ticket.id}`}>
+                    <Link legacyBehavior href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
                         <a>View</a>
                     </Link>
                 </td>
