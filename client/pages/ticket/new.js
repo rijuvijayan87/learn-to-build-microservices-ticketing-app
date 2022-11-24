@@ -1,4 +1,4 @@
-import { Router } from "next/router";
+import Router from "next/router";
 import { useState } from "react";
 import useRequest from "../../hooks/useRequest";
 
@@ -45,6 +45,7 @@ const NewTicket = () => {
                         onBlur={onBlur} />
                 </div>
                 <br />
+                {errors}
                 <button className="btn btn-primary">Submit</button>
             </form>
         </div>
