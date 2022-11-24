@@ -19,7 +19,7 @@ export default ({ currentUser }) => {
     return (
         <nav className="navbar navbar-light bg-light">
             <Link legacyBehavior href="/">
-                <a className="navbar-brand">Ticketing</a>
+                <a className="navbar-brand">TICKETING</a>
             </Link>
             <div className="d-flex justify-content-end">
                 <ul className="nav d-flex align-items-center">
