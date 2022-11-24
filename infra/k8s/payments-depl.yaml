@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: orders-depl
+  name: payments-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: orders
+      app: payments
   template:
     metadata:
       labels:
-        app: orders
+        app: payments
     spec:
       containers:
-        - name: orders
-          image: gcr.io/ticketing-dev-367810/orders
+        - name: payments
+          image: gcr.io/ticketing-dev-367810/payments
           resources:
             requests:
               memory: '256Mi'
@@ -32,22 +32,27 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: MONGO_URI
-              value: 'mongodb://orders-mongo-service:27017/orders'
+              value: 'mongodb://payments-mongo-service:27017/payments'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+            - name: STRIPE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stripe-secret
+                  key: STRIPE_KEY
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: orders-service
+  name: payments-service
 spec:
   selector:
-    app: orders
+    app: payments
   ports:
-    - name: orders
+    - name: payments
       protocol: TCP
       port: 3000
       targetPort: 3000
