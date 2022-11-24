@@ -7,6 +7,7 @@ import { natsWrapper } from './nats-wrapper';
 const PORT = process.env.PORT || 3000;
 
 const start = async () => {
+  console.log('tickets service starting up...');
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined');
   }
@@ -48,6 +49,7 @@ const start = async () => {
   } catch (error) {
     console.error(error);
   }
+  console.log('tickets service startup successful...');
 };
 
 app.listen(PORT, () => {
