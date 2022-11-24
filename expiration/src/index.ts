@@ -4,6 +4,8 @@ import { natsWrapper } from './nats-wrapper';
 const PORT = process.env.PORT || 3000;
 
 const start = async () => {
+  console.log('Starting up expiration service...');
+
   if (!process.env.NATS_CLIENT_ID) {
     throw new Error('NATS_CLIENT_ID must be defined');
   }
@@ -34,6 +36,7 @@ const start = async () => {
   } catch (error) {
     console.error(error);
   }
+  console.log('Expiration service startup successful...');
 };
 
 start();
