@@ -17,11 +17,11 @@ spec:
           image: gcr.io/ticketing-dev-367810/payments
           resources:
             requests:
-              memory: '128Mi'
-              cpu: '100m'
-            limits:
               memory: '256Mi'
-              cpu: '250m'
+              cpu: '200m'
+            limits:
+              memory: '512Mi'
+              cpu: '500m'
           env:
             - name: NATS_URL
               value: 'http://nats-service:4222'
