@@ -4,6 +4,8 @@ import { app } from './app';
 const PORT = process.env.PORT || 3000;
 
 const start = async () => {
+  console.log('Starting up auth service...');
+
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined');
   }
@@ -16,6 +18,7 @@ const start = async () => {
   } catch (error) {
     console.error(error);
   }
+  console.log('auth service startup successful...');
 };
 
 app.listen(PORT, () => {
