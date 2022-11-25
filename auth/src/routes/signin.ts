@@ -13,7 +13,7 @@ router.post(
     body('password')
       .trim()
       .notEmpty()
-      .withMessage('user password is missing in the request body'),
+      .withMessage('password is missing in the request body'),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
