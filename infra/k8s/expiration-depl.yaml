@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: expiration
-          image: gcr.io/ticketing-dev-367810/expiration
+          image: rijuvijayan/expiration
           resources:
             requests:
               memory: '128Mi'

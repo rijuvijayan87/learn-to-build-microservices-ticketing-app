@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: gcr.io/ticketing-dev-367810/client
+          image: rijuvijayan/client
           resources:
             requests:
               memory: '512Mi'

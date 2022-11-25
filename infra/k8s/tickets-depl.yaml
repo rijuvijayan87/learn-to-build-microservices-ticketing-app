@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: tickets
-          image: gcr.io/ticketing-dev-367810/tickets
+          image: rijuvijayan/tickets
           resources:
             requests:
               memory: '128Mi'
