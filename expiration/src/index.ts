@@ -7,7 +7,7 @@ const start = async () => {
   console.log('Starting up expiration service...');
 
   if (!process.env.NATS_CLIENT_ID) {
-    throw new Error('NATS_CLIENT_ID must be defined');
+    throw new Error('NATS_CLIENT_ID must be defined.');
   }
 
   if (!process.env.NATS_URL) {
