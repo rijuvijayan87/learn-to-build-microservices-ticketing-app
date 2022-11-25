@@ -10,6 +10,7 @@ spec:
   tls:
     - hosts:
         - testengineering.co.nz
+      secretName: testengineering.co.nz
   rules:
     - host: testengineering.co.nz
       http:
