@@ -1,10 +1,13 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
+import Header from './components/header';
+import Login from './components/login';
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <div>Ticketing app - base form</div>;
+  return (
+    <div>
+      <Header />
+      <Login />
+    </div>
+  );
 }
 
 export default App;
