@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import { currentUserRouter } from './routes/current-user';
@@ -10,6 +11,11 @@ import cookieSession from 'cookie-session';
 
 const app = express();
 app.set('trust proxy', true);
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 app.use(json());
 app.use(
   cookieSession({
