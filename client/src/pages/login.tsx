@@ -23,7 +23,8 @@ export default function Login() {
         }),
       }
     );
-    console.log(`RESPONSE : ${signInResponse.json()}`);
+    const result = await signInResponse.json();
+    console.log(`RESPONSE : ${JSON.stringify(result)}`);
   };
   return (
     <Container>
