@@ -11,7 +11,7 @@ export default function Login() {
     event.preventDefault();
     console.log(`Email: ${email} | Password: ${password}`);
     const signInResponse = await fetch(
-      'https://testengineering.co.nz/api/users/signin',
+      'http://localhost:3001/api/users/signin',
       {
         method: 'POST',
         headers: {
