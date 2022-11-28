@@ -51,6 +51,12 @@ services:
         limits:
           cpus: '1'
           memory: 256m
+    depends_on:
+      - auth-service
+      - nats-service
+      - tickets-service
+      - orders-service
+      - expiration-service
 
   nats-service:
     image: 'nats-streaming:0.17.0'
@@ -101,16 +107,6 @@ services:
           cpus: '1'
           memory: 256m
 
-  # tickets-mongo-service:
-  #   image: mongo
-  #   user: mongodb
-  #   volumes:
-  #     - tickets-data:/data/db
-  #   ports:
-  #     - 27018:27017
-  #   container_name: tickets-mongo-container
-  #   restart: always
-
   orders-service:
     build:
       context: orders
@@ -133,16 +129,6 @@ services:
         limits:
           cpus: '1'
           memory: 256m
-
-  # orders-mongo-service:
-  #   image: mongo
-  #   user: mongodb
-  #   volumes:
-  #     - orders-data:/data/db
-  #   ports:
-  #     - 27019:27017
-  #   container_name: orders-mongo-container
-  #   restart: always
 
   expiration-service:
     build:
