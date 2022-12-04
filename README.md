@@ -21,7 +21,21 @@ The goal is to create an application that we can use to test theories and evalua
 git clone git@github.com:rijuvijayan87/learn-to-build-microservices-ticketing-app.git
 ```
 
+## Testing
+
+Unit and integration tests are written for each service in order to test it. Either the script at the project `root` (example: `npm run test:auth`) or npm scripts in the individual projects can be used to perform tests (e.g. auth, ticket, orders)
+
+## Services
+
+| No. | Service        | URI                                            |
+| --- | -------------- | ---------------------------------------------- |
+| 1   | auth-service   | [http://localhost:3001](http://localhost:3001) |
+| 2   | ticket-service | [http://localhost:3002](http://localhost:3002) |
+| 3   | order-service  | [order-service:3003](http://localhost:3003)    |
+
 ## Sequence diagrams
+
+This project follows micr
 
 ### Auth service
 
