@@ -25,6 +25,14 @@ git clone git@github.com:rijuvijayan87/learn-to-build-microservices-ticketing-ap
 
 Unit and integration tests are written for each service in order to test it. Either the script at the project `root` (example: `npm run test:auth`) or npm scripts in the individual projects can be used to perform tests (e.g. auth, ticket, orders)
 
+## Starting services
+
+From the `root` of the project run the following command
+
+```bash
+    docker-compose up
+```
+
 ## Services
 
 | No. | Service        | URI                                            |
