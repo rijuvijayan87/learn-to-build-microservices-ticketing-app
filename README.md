@@ -39,7 +39,7 @@ From the `root` of the project run the following command
 | --- | -------------- | ---------------------------------------------- |
 | 1   | auth-service   | [http://localhost:3001](http://localhost:3001) |
 | 2   | ticket-service | [http://localhost:3002](http://localhost:3002) |
-| 3   | order-service  | [order-service:3003](http://localhost:3003)    |
+| 3   | order-service  | [http://localhost:3003](http://localhost:3003)    |
 
 ## Sequence diagrams
 
