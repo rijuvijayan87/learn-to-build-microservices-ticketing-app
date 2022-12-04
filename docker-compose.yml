@@ -1,0 +1,162 @@
+volumes:
+  auth-data:
+  tickets-data:
+  orders-data:
+  redis:
+
+services:
+  auth-service:
+    build:
+      context: auth
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3000
+    environment:
+      JWT_KEY: 'jwt_password'
+      MONGO_URI: 'mongodb://mongo-service:27017/auth'
+    container_name: auth-container
+    restart: always
+    depends_on:
+      - mongo-service
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256m
+
+  mongo-service:
+    image: mongo
+    volumes:
+      - auth-data:/data/db
+    ports:
+      - 27017:27017
+    container_name: mongo-container
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256m
+
+  client-service:
+    build:
+      context: client
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    container_name: frontend-web-container
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256m
+    depends_on:
+      - auth-service
+      - nats-service
+      - tickets-service
+      - orders-service
+      - expiration-service
+
+  nats-service:
+    image: 'nats-streaming:0.17.0'
+    command:
+      - '-p'
+      - '4222'
+      - '-m'
+      - '8222'
+      - '-hbi'
+      - '5s'
+      - '-hbt'
+      - '5s'
+      - '-hbf'
+      - '2'
+      - '-SD'
+      - '-cid'
+      - 'ticketing'
+    ports:
+      - '4222:4222'
+      - '8222:8222'
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256m
+
+  tickets-service:
+    build:
+      context: tickets
+      dockerfile: Dockerfile
+    ports:
+      - 3002:3000
+    environment:
+      JWT_KEY: 'jwt_password'
+      MONGO_URI: 'mongodb://mongo-service:27017/tickets'
+      NATS_CLIENT_ID: 'ticket-container-service'
+      NATS_CLUSTER_ID: 'ticketing'
+      NATS_URL: 'http://nats-service:4222'
+    container_name: tickets-container
+    restart: always
+    depends_on:
+      - mongo-service
+      - nats-service
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256m
+
+  orders-service:
+    build:
+      context: orders
+      dockerfile: Dockerfile
+    ports:
+      - 3003:3000
+    environment:
+      JWT_KEY: 'jwt_password'
+      MONGO_URI: 'mongodb://mongo-service:27017/orders'
+      NATS_CLIENT_ID: 'order-container-service'
+      NATS_CLUSTER_ID: 'ticketing'
+      NATS_URL: 'http://nats-service:4222'
+    container_name: orders-container
+    restart: always
+    depends_on:
+      - mongo-service
+      - nats-service
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256m
+
+  expiration-service:
+    build:
+      context: expiration
+      dockerfile: Dockerfile
+    environment:
+      JWT_KEY: 'jwt_password'
+      NATS_CLIENT_ID: 'expiration-container-service'
+      NATS_CLUSTER_ID: 'ticketing'
+      NATS_URL: 'http://nats-service:4222'
+      REDIS_HOST: 'expiration-redis-service'
+    container_name: expiration-container
+    restart: always
+    depends_on:
+      - expiration-redis-service
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256m
+
+  expiration-redis-service:
+    image: 'redis'
+    restart: always
+    ports:
+      - 6379:6379
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 100m

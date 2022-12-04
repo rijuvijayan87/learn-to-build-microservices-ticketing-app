@@ -1,0 +1,470 @@
+openapi: 3.0.3
+info:
+  title: Ticketing application
+  description: |-
+    This is a sample application to learn and practice test automation.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: rijuvijayan@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: http://localhost:3000/
+  - url: http://localhost:3001/
+  - url: http://localhost:3002/
+  - url: http://localhost:3003/
+tags:
+  - name: auth
+    description: User creation and signin
+  - name: tickets
+    description: Create, update and view tickets
+  - name: orders
+    description: Create and view orders
+  - name: payments
+    description: Make payments
+paths:
+  /api/users/signup:
+    post:
+      tags:
+        - auth
+      summary: Create a new user
+      description: create a new user by email and password
+      requestBody:
+        description: create a new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '201':
+          description: User creation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: JSESSIONID=abcde12345; Path=/; HttpOnly
+        '400':
+          description: Bad request. email must be valid. Password length should be >=4 && <=20
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errros:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                    example:
+                      - message: invalid email entered
+                        field: email
+                      - message: password length should be between 4 and 20 characters
+                        field: password
+
+  /api/users/signin:
+    post:
+      tags:
+        - auth
+      summary: Sign in as an user
+      description: sigin using email and password
+      requestBody:
+        description: sign in
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '200':
+          description: >
+            Successfully authenticated.
+            The session ID is returned in a cookie named `session`. You need to include this cookie in subsequent requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: session=abcde12345; Path=/; HttpOnly
+        '400':
+          description: Bad request. email must be valid. Email and password must be valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errros:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+
+  /api/users/currentuser:
+    get:
+      tags:
+        - auth
+      summary: Current logged in user
+      description: Get details of logged in user
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: logged in user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currentUser:
+                    $ref: '#/components/schemas/CurrentUser'
+
+  /api/users/signout:
+    post:
+      tags:
+        - auth
+      summary: Sign out
+      description: sign out
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: >
+            Successfully signed out.
+
+  /api/tickets:
+    post:
+      tags:
+        - tickets
+      summary: create a new ticket
+      description: create a new ticket
+      requestBody:
+        description: create a ticket
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+        required: true
+      security:
+        - cookieAuth: []
+      responses:
+        '201':
+          description: >
+            Ticket creation success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketResponse'
+        '400':
+          description: Bad request. must supply title and price must be greater than 0
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errros:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                    example:
+                      - message: Title is required
+                        field: title
+                      - message: Price must be greater than 0
+                        field: price
+
+    get:
+      tags:
+        - tickets
+      summary: Retrieve all tickets
+      description: Retrieve all tickets
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: tickets retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TicketResponse'
+
+  /api/tickets/{ticketId}:
+    put:
+      tags:
+        - tickets
+      summary: update a ticket
+      description: update a ticket
+      parameters:
+        - in: path
+          name: ticketId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the ticket
+      requestBody:
+        description: create a ticket
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket'
+        required: true
+      security:
+        - cookieAuth: []
+      responses:
+        '201':
+          description: >
+            Ticket update success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketResponse'
+        '400':
+          description: Bad request. Ticket ID supplied is either invalid or does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errros:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                    example:
+                      - message: Invalid route attempted
+        '401':
+          description: Authorisation error. User is not authorised to update the ticket
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errros:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                    example:
+                      - message: user not authorized
+
+    get:
+      tags:
+        - tickets
+      summary: get ticket details
+      description: get ticket details
+      parameters:
+        - in: path
+          name: ticketId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the ticket
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: >
+            Ticket retrieval success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketResponse'
+        '400':
+          description: Bad request. Ticket ID supplied is either invalid or does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errros:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                    example:
+                      - message: Invalid route attempted
+        '401':
+          description: Authorisation error. User is not authorised to update the ticket
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errros:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                    example:
+                      - message: user not authorized
+
+  /api/orders:
+    post:
+      tags:
+        - orders
+      summary: create a new order
+      description: create a new order
+      requestBody:
+        description: create a new order by passing ticket id created by `POST /api/tickets` in `ticketId` field
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticketId:
+                  type: string
+                  example: 6384690c654bf5124552586b
+        required: true
+      security:
+        - cookieAuth: []
+      responses:
+        '201':
+          description: >
+            new order created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Following the creation of an order, the expiration service will monitor it for 1 minute (configurable). During this time, the order service will freeze orders to prevent users from making changes to orders that are currently in progress.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errros:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                    example:
+                      - message: Ticket is already reserved
+
+        '401':
+          description: Authorisation error. User is not authorised to create an order
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errros:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+                    example:
+                      - message: user not authorized
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+          description: email address
+          example: 'test@test.com'
+        password:
+          type: string
+      required:
+        - email
+        - password
+    CurrentUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: mongodb document id
+          example: '6383dc28e24617b2edcf7986'
+        email:
+          type: string
+          description: email address
+          example: 'test@test.com'
+        password:
+          type: string
+      required:
+        - id
+        - email
+        - password
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        field:
+          type: string
+      required:
+        - message
+    Ticket:
+      type: object
+      properties:
+        title:
+          type: string
+          example: 'concert'
+        price:
+          type: integer
+          example: 40
+
+    TicketResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          example: concert
+        price:
+          type: integer
+          example: 40
+        userId:
+          type: string
+        version:
+          type: integer
+          example: 0
+        id:
+          type: string
+          description: mongodb ticket document id
+          example: 63848322d2f63d7cb2f5a13d
+    Order:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 6383ebe35fe19242008f5b82
+        status:
+          type: string
+          enum: [asc, desc]
+          description: >
+            Sort order:
+             * `asc` - Ascending, from A to Z
+             * `desc` - Descending, from Z to A
+        expiresAt:
+          type: string
+          example: '2022-11-28T07:57:33.559Z'
+        ticket:
+          type: object
+          properties:
+            title:
+              type: string
+              example: coffee
+            price:
+              example: 23
+            version:
+              example: 2
+            id:
+              example: 6384690c654bf5124552586b
+        version:
+          type: integer
+          example: 0
+        id:
+          type: string
+          example: 638469b1085d44d57e719fdc
+
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: session # cookie name
+
+security:
+  - cookieAuth: []

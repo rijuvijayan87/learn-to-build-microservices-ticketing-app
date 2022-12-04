@@ -2,28 +2,28 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
+import { RequestMethod } from '../api/methods';
+import { doRequest } from '../api/do-request';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const onSubmitHandle = async (event: any) => {
     event.preventDefault();
     console.log(`Email: ${email} | Password: ${password}`);
-    const signInResponse = await fetch(
-      'https://testengineering.co.nz/api/users/signin',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      }
-    );
-    console.log(`RESPONSE : ${signInResponse.json()}`);
+    const signInResponse = await doRequest({
+      url: 'http://localhost:3001/api/users/signin',
+      method: RequestMethod.post,
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+    localStorage.setItem('user', email);
+    navigate('/tickets');
   };
   return (
     <Container>
@@ -55,7 +55,7 @@ export default function Login() {
           variant='primary'
           type='submit'
         >
-          Create Account
+          Sign In
         </Button>
       </Form>
     </Container>
