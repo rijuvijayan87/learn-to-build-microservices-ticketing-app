@@ -6,7 +6,7 @@ import { RequestMethod } from '../api/methods';
 import { doRequest } from '../api/do-request';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function NewAccount() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -14,15 +14,15 @@ export default function Login() {
   const onSubmitHandle = async (event: any) => {
     event.preventDefault();
     console.log(`Email: ${email} | Password: ${password}`);
-    const signInResponse = await doRequest({
-      url: 'http://localhost:3001/api/users/signin',
+    const signUpResponse = await doRequest({
+      url: 'http://localhost:3001/api/users/signup',
       method: RequestMethod.post,
       body: JSON.stringify({
         email,
         password,
       }),
     });
-    localStorage.setItem('user', email);
+    console.log(`RESPONSE : ${JSON.stringify(signUpResponse)}`);
     navigate('/tickets');
   };
   return (
@@ -55,7 +55,7 @@ export default function Login() {
           variant='primary'
           type='submit'
         >
-          Sign In
+          Create Account
         </Button>
       </Form>
     </Container>
