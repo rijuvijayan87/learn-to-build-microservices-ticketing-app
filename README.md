@@ -35,8 +35,6 @@ Unit and integration tests are written for each service in order to test it. Eit
 
 ## Sequence diagrams
 
-This project follows micr
-
 ### Auth service
 
 ![Authorization workflow](./docs/auth.png)
