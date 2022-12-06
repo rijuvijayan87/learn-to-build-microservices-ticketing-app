@@ -30,9 +30,9 @@ Unit and integration tests are written for each service in order to test it. Eit
 > Docker Volume is being used in this project to persist the data. Therefore, perform the following commands to establish docker volumes right before you launch the project just for the first time.
 
 ```bash
-  docker volumne create auth-data
-  docker volumne create tickets-data
-  docker volumne create orders-data
+  docker volume create auth-data
+  docker volume create tickets-data
+  docker volume create orders-data
 ```
 
 From the `root` of the project run the following command
