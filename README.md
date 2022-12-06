@@ -25,7 +25,15 @@ git clone git@github.com:rijuvijayan87/learn-to-build-microservices-ticketing-ap
 
 Unit and integration tests are written for each service in order to test it. Either the script at the project `root` (example: `npm run test:auth`) or npm scripts in the individual projects can be used to perform tests (e.g. auth, ticket, orders)
 
-## Starting services
+## Run
+
+> Docker Volume is being used in this project to persist the data. Therefore, perform the following commands to establish docker volumes right before you launch the project just for the first time.
+
+```bash
+  docker volumne create auth-data
+  docker volumne create tickets-data
+  docker volumne create orders-data
+```
 
 From the `root` of the project run the following command
 
