@@ -30,9 +30,9 @@ Unit and integration tests are written for each service in order to test it. Eit
 > Docker Volume is being used in this project to persist the data. Therefore, perform the following commands to establish docker volumes right before you launch the project just for the first time.
 
 ```bash
-  docker volumne create auth-data
-  docker volumne create tickets-data
-  docker volumne create orders-data
+  docker volume create auth-data
+  docker volume create tickets-data
+  docker volume create orders-data
 ```
 
 From the `root` of the project run the following command
@@ -48,6 +48,10 @@ From the `root` of the project run the following command
 | 1   | auth-service   | [http://localhost:3001](http://localhost:3001) |
 | 2   | ticket-service | [http://localhost:3002](http://localhost:3002) |
 | 3   | order-service  | [http://localhost:3003](http://localhost:3003) |
+
+## Postman Collection
+
+You may use the postman collection in the `./docs/postman` folder to test out the apis. The collection and the environment file needs to be loaded to postman to run the apis. Environment file is pre-configured with the endpoints as mentioned in the table above
 
 ## Sequence diagrams
 
