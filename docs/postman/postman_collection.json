@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "ccb34f28-0a9c-4ee8-8422-0a92af558601",
+		"name": "Ticketing app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23731643"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@test\",\n    \"password\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}:{{auth_port}}/api/users/signup",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"api",
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}:{{auth_port}}/api/users/signin",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"api",
+								"users",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get current user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{auth_port}}/api/users/currentuser",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"api",
+								"users",
+								"currentuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{auth_port}}/api/users/signout",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{auth_port}}",
+							"path": [
+								"api",
+								"users",
+								"signout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ticket",
+			"item": [
+				{
+					"name": "create ticket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"coffee\",\n    \"price\": 5.5\n}"
+						},
+						"url": {
+							"raw": "{{url}}:{{ticket_port}}/api/tickets",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{ticket_port}}",
+							"path": [
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update ticket",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"cricket match\",\n    \"price\": \"65\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}:{{ticket_port}}/api/tickets/6383ebe35fe19242008f5b82",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{ticket_port}}",
+							"path": [
+								"api",
+								"tickets",
+								"6383ebe35fe19242008f5b82"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get ticket",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{ticket_port}}/api/tickets/6383e3a46756a1ad0cc54905",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{ticket_port}}",
+							"path": [
+								"api",
+								"tickets",
+								"6383e3a46756a1ad0cc54905"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all tickets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{ticket_port}}/api/tickets",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{ticket_port}}",
+							"path": [
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "create order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ticketId\": \"63849254d2f63d7cb2f5a149\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}:{{order_port}}/api/orders",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{order_port}}",
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get order",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{order_port}}/api/orders/6383e512b296aa1055add794",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{order_port}}",
+							"path": [
+								"api",
+								"orders",
+								"6383e512b296aa1055add794"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{order_port}}/api/orders",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{order_port}}",
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payments",
+			"item": [
+				{
+					"name": "create payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderId\": \"6380b6cc542f2662a6c96686\",\n    \"token\": \"tok_visa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{url}}/api/payments",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

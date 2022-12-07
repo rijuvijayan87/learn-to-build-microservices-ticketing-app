@@ -1,0 +1,33 @@
+{
+	"id": "37cb215c-c1f7-412d-9462-02652c2f1c52",
+	"name": "ticketing_app_local",
+	"values": [
+		{
+			"key": "url",
+			"value": "http://localhost",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "auth_port",
+			"value": "3001",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "ticket_port",
+			"value": "3002",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "order_port",
+			"value": "3003",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-12-07T03:26:29.156Z",
+	"_postman_exported_using": "Postman/9.31.23"
+}
