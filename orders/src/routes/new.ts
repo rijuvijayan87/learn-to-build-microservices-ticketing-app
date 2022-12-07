@@ -1,5 +1,6 @@
 import {
   BadRequestError,
+  NotAuthorizedError,
   OrderStatus,
   requireAuth,
   ResourceNotFoundError,
@@ -29,6 +30,9 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    if (!req.currentUser) {
+      throw new NotAuthorizedError();
+    }
     // find the ticket the user is trying to order in the database
     const { ticketId } = req.body;
     const ticket = await Ticket.findById(ticketId);
