@@ -11,12 +11,30 @@
 			"item": [
 				{
 					"name": "create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"set jwt\", function () {",
+									"    var responsedata = pm.response.json();",
+									"    pm.environment.set(\"jwt\", responsedata.jwt);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"test@test\",\n    \"password\": \"test\"\n}",
+							"raw": "{\n    \"email\": \"test15@test.com\",\n    \"password\": \"test\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -40,12 +58,30 @@
 				},
 				{
 					"name": "signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"set jwt\", function () {",
+									"    var responsedata = pm.response.json();",
+									"    pm.environment.set(\"jwt\", responsedata.jwt);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}",
+							"raw": "{\n    \"email\": \"test13@test.com\",\n    \"password\": \"test\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -69,9 +105,28 @@
 				},
 				{
 					"name": "get current user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}:{{auth_port}}/api/users/currentuser",
 							"host": [
@@ -114,12 +169,35 @@
 			"item": [
 				{
 					"name": "create ticket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"set ticketid\", function () {",
+									"    var responsedata = pm.response.json();",
+									"    pm.environment.set(\"ticketid\", responsedata.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
@@ -143,12 +221,30 @@
 				},
 				{
 					"name": "update ticket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
@@ -157,7 +253,7 @@
 							"raw": "{\n    \"title\": \"cricket match\",\n    \"price\": \"65\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}:{{ticket_port}}/api/tickets/6383ebe35fe19242008f5b82",
+							"raw": "{{url}}:{{ticket_port}}/api/tickets/{{ticketid}}",
 							"host": [
 								"{{url}}"
 							],
@@ -165,7 +261,7 @@
 							"path": [
 								"api",
 								"tickets",
-								"6383ebe35fe19242008f5b82"
+								"{{ticketid}}"
 							]
 						}
 					},
@@ -173,6 +269,19 @@
 				},
 				{
 					"name": "get ticket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -183,7 +292,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}:{{ticket_port}}/api/tickets/6383e3a46756a1ad0cc54905",
+							"raw": "{{url}}:{{ticket_port}}/api/tickets/{{ticketid}}",
 							"host": [
 								"{{url}}"
 							],
@@ -191,7 +300,7 @@
 							"path": [
 								"api",
 								"tickets",
-								"6383e3a46756a1ad0cc54905"
+								"{{ticketid}}"
 							]
 						}
 					},
@@ -199,6 +308,19 @@
 				},
 				{
 					"name": "get all tickets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -229,6 +351,24 @@
 			"item": [
 				{
 					"name": "create order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"set orderid\", function () {",
+									"    var responsedata = pm.response.json();",
+									"    pm.environment.set(\"orderid\", responsedata.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -236,11 +376,16 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ticketId\": \"63849254d2f63d7cb2f5a149\"\n}"
+							"raw": "{\n    \"ticketId\": \"{{ticketid}}\"\n}"
 						},
 						"url": {
 							"raw": "{{url}}:{{order_port}}/api/orders",
@@ -258,6 +403,19 @@
 				},
 				{
 					"name": "get order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -265,10 +423,15 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{url}}:{{order_port}}/api/orders/6383e512b296aa1055add794",
+							"raw": "{{url}}:{{order_port}}/api/orders/{{orderid}}",
 							"host": [
 								"{{url}}"
 							],
@@ -276,7 +439,7 @@
 							"path": [
 								"api",
 								"orders",
-								"6383e512b296aa1055add794"
+								"{{orderid}}"
 							]
 						}
 					},
@@ -284,12 +447,30 @@
 				},
 				{
 					"name": "get all orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
@@ -302,6 +483,45 @@
 							"path": [
 								"api",
 								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{order_port}}/api/orders/{{orderid}}",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{order_port}}",
+							"path": [
+								"api",
+								"orders",
+								"{{orderid}}"
 							]
 						}
 					},
