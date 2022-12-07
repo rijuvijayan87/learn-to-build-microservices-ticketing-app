@@ -1,11 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
-import {
-  errorHandler,
-  RouteNotFoundError,
-  currentUser,
-} from '@ticketing-rv/common';
+import { errorHandler, RouteNotFoundError } from '@ticketing-rv/common';
 import cookieSession from 'cookie-session';
 import { newOrderRouter } from './routes/new';
 import { showOrderRouter } from './routes/show';
@@ -22,8 +18,6 @@ app.use(
     secure: false,
   })
 );
-app.use(currentUser);
-
 app.use(newOrderRouter);
 app.use(showOrderRouter);
 app.use(indexOrderRouter);

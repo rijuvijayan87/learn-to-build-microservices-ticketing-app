@@ -40,11 +40,16 @@ router.post(
     );
 
     // store it in session object
-    req.session = {
-      jwt: userJwt,
-    };
+    // req.session = {
+    //   jwt: userJwt,
+    // };
 
-    res.status(200).json(existingUser);
+    res.status(200).json({
+      user: existingUser,
+      jwt: userJwt,
+    });
+
+    //res.status(200).json(existingUser);
   }
 );
 

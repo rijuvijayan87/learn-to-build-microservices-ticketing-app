@@ -1,9 +1,9 @@
 import express from 'express';
-import { currentUser } from '@ticketing-rv/common';
+import { requireAuth } from '@ticketing-rv/common';
 
 const router = express.Router();
 
-router.post('/api/users/signout', currentUser, (req, res) => {
+router.post('/api/users/signout', requireAuth, (req, res) => {
   req.session = null;
   res.send({});
 });

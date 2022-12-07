@@ -34,12 +34,14 @@ router.post(
       process.env.JWT_KEY!
     );
 
-    // store it in session object
-    req.session = {
+    // // store it in session object
+    // req.session = {
+    //   jwt: userJwt,
+    // };
+    res.status(201).json({
+      user,
       jwt: userJwt,
-    };
-
-    res.status(201).json(user);
+    });
   }
 );
 

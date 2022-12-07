@@ -1,5 +1,9 @@
 import express, { Request, Response } from 'express';
-import { requireAuth, validateRequest } from '@ticketing-rv/common';
+import {
+  NotAuthorizedError,
+  requireAuth,
+  validateRequest,
+} from '@ticketing-rv/common';
 import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
 import { TicketCreatedPublisher } from '../events/publishers/ticket-created-publisher';
@@ -17,6 +21,9 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    if (!req.currentUser) {
+      throw new NotAuthorizedError();
+    }
     const { title, price } = req.body;
     const ticket = Ticket.build({
       title,
