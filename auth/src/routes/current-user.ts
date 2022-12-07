@@ -1,9 +1,9 @@
-import { currentUser, NotAuthorizedError } from '@ticketing-rv/common';
+import { NotAuthorizedError, requireAuth } from '@ticketing-rv/common';
 import express from 'express';
 
 const router = express.Router();
 
-router.get('/api/users/currentuser', currentUser, (req, res) => {
+router.get('/api/users/currentuser', requireAuth, (req, res) => {
   if (!req.currentUser) {
     throw new NotAuthorizedError();
   }
